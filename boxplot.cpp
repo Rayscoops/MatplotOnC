@@ -12,11 +12,15 @@ using namespace plt;
 using namespace std; 
 
 #define workers 4
-#define directory "test/"
+#define directory "data_test/"
 
 void read_directory(const string& name, vector<string>& v)
 {
     DIR* dirp = opendir(name.c_str());
+    if(dirp == NULL){
+        cout << "Error Filename" << endl;
+        exit(1);
+}
     struct dirent * dp;
     while ((dp = readdir(dirp)) != NULL) {
         if(strcmp(dp->d_name,"..") && strcmp(dp->d_name,"."))
@@ -105,7 +109,6 @@ int main() {
 
         read_directory(directory,files);
         add_data(files,data);
-
 
         vector<int> tab_clauses[workers];
         vector<int> tab_doublons[workers];
